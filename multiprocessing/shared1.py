@@ -2,7 +2,7 @@ import multiprocessing
 
 class Processo(multiprocessing.Process):
     
-    def __init__(self, counter):
+    def __init__(self, contador):
         super(Processo, self).__init__()
         self.contador = contador
 
@@ -11,10 +11,10 @@ class Processo(multiprocessing.Process):
             self.contador.value += 1
 
 
-contador = multiprocessing.Value('i')
-contador.value = 0
+var_compartilhada = multiprocessing.Value('i')
+var_compartilhada.value = 0
 
-processos = [Processo(contador) for i in range(4)]
+processos = [Processo(var_compartilhada) for i in range(4)]
 [p.start() for p in processos]
 [p.join() for p in processos]
-print(contador.value)
+print(var_compartilhada.value)
